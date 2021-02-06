@@ -3,8 +3,12 @@ language: generic
 services:
   - docker
 
+# commands executed before running the tests
+# tagging the image is necessary to reuse it after the built process
+# the tag format follows the standard docker conventions
 before_install:
   - docker build -f Dockerfile.dev -t stephenroille/app .
 
+# command to execute to run the tests
 script:
-  - docker run -e CI=true stephenroille/app npm run test
+  - docker run -e CI=true stephenroille/app npm run test -- --coverage
